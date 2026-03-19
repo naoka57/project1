@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}予約確認 - TravelFind{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="booking-card">
+        <div class="booking-header">
+            <h2>予約内容の確認</h2>
+            <p>以下の内容で予約を行います</p>
+        </div>
+        <div class="booking-body">
+            <!-- フライト情報 -->
+            <div class="booking-section">
+                <h3>&#9992; フライト情報</h3>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">航空会社</span>
+                    <span>Korean Air</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">ルート</span>
+                    <span>NRT → LAX</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">出発</span>
+                    <span>09:00</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">到着</span>
+                    <span>06:30</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">所要時間</span>
+                    <span>13h 30m (1回乗換)</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">フライト料金</span>
+                    <span style="font-weight:700;">¥58,000</span>
+                </div>
+            </div>
+
+            <!-- ホテル情報 -->
+            <div class="booking-section">
+                <h3>&#127976; ホテル情報</h3>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">ホテル名</span>
+                    <span>Motel 6 Los Angeles</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">エリア</span>
+                    <span>Hollywood</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">評価</span>
+                    <span>&#9733; 3.2</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">宿泊</span>
+                    <span>7泊</span>
+                </div>
+                <div class="booking-detail-row">
+                    <span class="booking-detail-label">ホテル料金</span>
+                    <span style="font-weight:700;">¥8,000/泊 × 7泊 = ¥56,000</span>
+                </div>
+            </div>
+
+            <!-- 合計 -->
+            <div class="booking-section">
+                <div class="booking-total">
+                    <span>合計金額</span>
+                    <span class="price">¥114,000</span>
+                </div>
+            </div>
+
+            <!-- 予約者情報 -->
+            <div class="booking-section">
+                <h3>&#128100; 予約者情報</h3>
+                <div class="search-form" style="margin-top:12px;">
+                    <div class="form-group">
+                        <label>氏名（ローマ字）</label>
+                        <input type="text" placeholder="YAMADA TARO">
+                    </div>
+                    <div class="form-group">
+                        <label>メールアドレス</label>
+                        <input type="email" placeholder="taro@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>電話番号</label>
+                        <input type="tel" placeholder="090-1234-5678">
+                    </div>
+                    <div class="form-group">
+                        <label>パスポート番号</label>
+                        <input type="text" placeholder="AB1234567">
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-actions">
+                <a href="/" class="btn btn-outline">&#8592; 検索に戻る</a>
+                <button class="btn btn-primary" onclick="alert('予約が完了しました！（デモ）')">
+                    &#10003; 予約を確定する
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

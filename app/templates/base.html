@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TravelFind - 最安値フライト&ホテル検索{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">&#9992;</span>
+                TravelFind
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">検索</a></li>
+                <li><a href="/history">予約履歴</a></li>
+                <li><a href="#">ログイン</a></li>
+            </ul>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <p>&copy; 2026 TravelFind - 最安値フライト&ホテル予約ツール</p>
+    </footer>
+</body>
+</html>

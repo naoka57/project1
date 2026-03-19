@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <h1>最安値のフライト&ホテルを見つけよう</h1>
+    <p>出発地と目的地を入力するだけで、最安の組み合わせを自動で検索します</p>
+</section>
+
+<div class="search-card">
+    <form class="search-form"
+          hx-post="/api/search/results"
+          hx-target="#results-area"
+          hx-indicator="#loading">
+        <div class="form-group">
+            <label for="origin">出発地</label>
+            <input type="text" id="origin" name="origin" placeholder="NRT (成田)" value="NRT" required>
+        </div>
+        <div class="form-group">
+            <label for="destination">目的地</label>
+            <input type="text" id="destination" name="destination" placeholder="LAX (ロサンゼルス)" value="LAX" required>
+        </div>
+        <div class="form-group">
+            <label for="departure_date">出発日</label>
+            <input type="date" id="departure_date" name="departure_date" required>
+        </div>
+        <div class="form-group">
+            <label for="return_date">帰国日</label>
+            <input type="date" id="return_date" name="return_date" required>
+        </div>
+        <div class="form-group">
+            <label for="adults">大人</label>
+            <select id="adults" name="adults">
+                <option value="1">1名</option>
+                <option value="2">2名</option>
+                <option value="3">3名</option>
+                <option value="4">4名</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>&nbsp;</label>
+        </div>
+        <div class="search-btn-wrap">
+            <button type="submit" class="btn btn-primary btn-lg">
+                &#128269; 最安値を検索
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div id="loading" class="htmx-indicator">
+        <div class="spinner"></div>
+    </div>
+    <div id="results-area"></div>
+</div>
+
+<script>
+    // 日付のデフォルト値を設定
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const dep = new Date(today);
+        dep.setDate(dep.getDate() + 30);
+        const ret = new Date(today);
+        ret.setDate(ret.getDate() + 37);
+
+        document.getElementById('departure_date').value = dep.toISOString().split('T')[0];
+        document.getElementById('return_date').value = ret.toISOString().split('T')[0];
+    });
+</script>
+{% endblock %}

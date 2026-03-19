@@ -1,0 +1,130 @@
+<div class="results-header">
+    <h2>検索結果</h2>
+    <span class="results-summary">{{ origin }} → {{ destination }} | {{ departure_date }} 〜 {{ return_date }} | {{ adults }}名</span>
+</div>
+
+<div class="tab-bar">
+    <button class="tab active" onclick="showTab('combined', this)">おすすめ組み合わせ</button>
+    <button class="tab" onclick="showTab('flights', this)">フライトのみ</button>
+    <button class="tab" onclick="showTab('hotels', this)">ホテルのみ</button>
+</div>
+
+<!-- おすすめ組み合わせ -->
+<div id="tab-combined">
+    {% for combo in combinations %}
+    <div class="combo-card {{ 'best-deal' if loop.index == 1 else '' }}">
+        {% if loop.index == 1 %}
+        <div class="best-deal-badge">&#9733; 最安値</div>
+        {% endif %}
+        <div class="combo-inner">
+            <div class="combo-flight">
+                <div class="section-label">フライト</div>
+                <div class="flight-info">
+                    <div class="airline-code">{{ combo.flight.airline_logo }}</div>
+                    <div class="flight-route">
+                        <div class="flight-times">
+                            {{ combo.flight.departure_time }}
+                            <span class="arrow">→</span>
+                            {{ combo.flight.arrival_time }}
+                        </div>
+                        <div class="flight-meta">
+                            {{ combo.flight.airline }} · {{ combo.flight.duration }}
+                            <span class="stops-badge {{ 'stops-direct' if combo.flight.stops == 0 else 'stops-1' }}">
+                                {{ '直行便' if combo.flight.stops == 0 else (combo.flight.stops|string + '回乗換') }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flight-price-small">
+                        ¥{{ "{:,}".format(combo.flight.price) }}
+                    </div>
+                </div>
+            </div>
+            <div class="combo-hotel">
+                <div class="section-label">ホテル ({{ combo.nights }}泊)</div>
+                <div class="hotel-info">
+                    <div class="hotel-thumb">&#127976;</div>
+                    <div class="hotel-details">
+                        <h4>{{ combo.hotel.name }}</h4>
+                        <div class="hotel-area">{{ combo.hotel.area }}</div>
+                        <div class="hotel-rating">
+                            &#9733; {{ combo.hotel.rating }}
+                            ({{ '&#9733;' * combo.hotel.stars }})
+                        </div>
+                        <div class="hotel-price-small">
+                            ¥{{ "{:,}".format(combo.hotel.price_per_night) }}/泊 × {{ combo.nights }}泊 = ¥{{ "{:,}".format(combo.hotel_total) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="combo-price">
+                <div class="total-label">合計</div>
+                <div class="total-price">
+                    ¥{{ "{:,}".format(combo.total_price) }}
+                </div>
+                <a href="/booking/{{ combo.flight.id }}-{{ combo.hotel.id }}" class="btn btn-primary">予約する</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- フライト一覧 -->
+<div id="tab-flights" style="display:none;">
+    {% for flight in flights %}
+    <div class="list-card">
+        <div class="flight-info" style="flex:1;">
+            <div class="airline-code">{{ flight.airline_logo }}</div>
+            <div class="flight-route">
+                <div class="flight-times">
+                    {{ flight.departure_time }}
+                    <span class="arrow">→</span>
+                    {{ flight.arrival_time }}
+                </div>
+                <div class="flight-meta">
+                    {{ flight.airline }} · {{ flight.duration }}
+                    <span class="stops-badge {{ 'stops-direct' if flight.stops == 0 else 'stops-1' }}">
+                        {{ '直行便' if flight.stops == 0 else (flight.stops|string + '回乗換') }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:right;">
+            <div class="card-price">¥{{ "{:,}".format(flight.price) }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ホテル一覧 -->
+<div id="tab-hotels" style="display:none;">
+    {% for hotel in hotels %}
+    <div class="list-card">
+        <div class="hotel-info" style="flex:1;">
+            <div class="hotel-thumb">&#127976;</div>
+            <div class="hotel-details">
+                <h4>{{ hotel.name }}</h4>
+                <div class="hotel-area">{{ hotel.area }}</div>
+                <div class="hotel-rating">&#9733; {{ hotel.rating }}</div>
+                <div class="amenities">
+                    {% for amenity in hotel.amenities %}
+                    <span class="amenity-tag">{{ amenity }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div style="text-align:right;">
+            <div class="card-price">¥{{ "{:,}".format(hotel.price_per_night) }}</div>
+            <div class="card-price-sub">/ 1泊</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function showTab(tab, el) {
+    document.querySelectorAll('[id^="tab-"]').forEach(d => d.style.display = 'none');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).style.display = 'block';
+    el.classList.add('active');
+}
+</script>
